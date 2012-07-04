@@ -38,3 +38,4 @@ sed -i "s/@dday/$day/g" $filename
 sed -i "s/@day/`date +%e`/g" $filename
 
 echo "Finished adding $filename to $year."
+gvim $filename
