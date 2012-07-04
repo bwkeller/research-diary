@@ -1,0 +1,61 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2011 $|$ Dec $|$ 05}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item[\checkmark] See where to start with gasoline
+\item[\textleaf] Run Tom's ICs on gasoline.
+\item Track down cause of ChaNGa crash at time \~0.3
+\item Familiarize myself with tipsy
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Monday}
+I've emailed James about the strange gasoline hanging bug, as I've been unable
+to determine the cause.  He replied that I need to set a number of MPI related
+environment variables as a possible solution to the problem.  These can be
+passed to the shell through the builtin \verb!export!:\\
+\verb!export OMPI_MCA_btl=^mx,ofud!\\
+\verb!export OMPI_MCA_pml=^cm!\\
+\verb!export OMPI_MCA_mpi_leave_pinned=0!\\
+\verb!export OMPI_MCA_btl_openib_eager_rdma=0!\\
+He also recommended I run on fewer cores, as gasoline typically runs best when 
+each processor handles \~100,000 particles.  Also, SHARCNet's orca is optimized
+for jobs in groups of 24 cores. I should try and run in multiples of 24, or
+for smaller jobs, multiples of 8.
+\subsection*{Tuesday}
+The gasoline process is still running on orca, which is good.  It seems a bit
+slow though, perhaps James was low-balling me a bit on the number of cores
+to run on.  I will work mostly on the gasoline manual today.
+\subsection*{Wednesday}
+I unfortunately forgot to give gasoline enough run time to actually complete
+the full run of Tom's ICs, so I had to restart it today with a longer walltime.
+I also have tried to "resume" it from the stage it was at this morning.  I did
+so by changing the \verb!Disk_Collapse_1e6.param! lines:\\
+\verb!achInFile		= Disk_Collapse_1e6.std!\\
+\verb!nSteps		= 150!\\
+\verb!dExtraCoolShutoff	= 2!\\
+to\\
+\verb!achInFile		= Disk_Collapse_1e6.00070!\\
+\verb!nSteps		= 80!\\
+\verb!dExtraCoolShutoff	= 0!\\
+The first two changes get gasoline to pick up at the intermediate output from 
+timestep 70, and the second change I believe is necessary because there is
+"extra cooling" enabled within the first two timesteps of the simulation,
+and I don't want it kicking in again at the 70th timestep.
+\end{document}

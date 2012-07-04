@@ -1,0 +1,97 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ Jan $|$ 02}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item[\checkmark] Run Tom's ICs on gasoline.
+\item[\textleaf] Replicate figure 5 from Hopkins 2011
+\item[\checkmark] Make some cool movies using pynbody
+\item Track down cause of ChaNGa crash at time \~0.3
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Tuesday}
+Today I am going to begin replicating figure 5 from the Hopkins 2011 \textit{
+Analytic Model of Angular Momentum Transport} paper.  I think pynbody is the
+tool for this job, so I've updated it, and I'm now reading the documentation.\\
+Wowee, I made some really awesome plots with pynbody!  This is really handy.  
+I think I'm going to use it to make some movies. I've started a script in 
+\verb!Research/scripts/pynmovie.py! for autogenerating time-frame movies of 
+evolution using pynbody's plotting features.\\
+Tomorrow I will need to figure out what I will need to do to replicate the 
+figure I need.  I will probably need to add something into pynbody.  I think 
+what I will need to do is calculate a surface integral of the mass flow through
+a cylidrical slice at a given radius, using some sort of Gauss' law type 
+formulation.  I will need to learn some neat SPH stuff to figure out how to do
+this! I hope I don't need to run any more of the simulations.  I should also 
+probably go through that paper I emailed James about yesterday with a 
+highlighter to prep for the group meeting Thursday.
+\subsection*{Wednesday}
+I was thinking about how to calculate $\dot M$ today in the shower, and I came
+up with this:
+$$\dot M = \oint \rho \vec v \cdot d\vec S$$
+Where $\rho$ is the surface density of stars + gas.  I'm not sure if there
+will be SPH related issues in calculating this, but I'm going to get to work 
+today to try and find if pynbody already has the required features to calculate
+that, or if I need to add them myself.\\
+I met with James after class, and he confirmed my worries, calculating 
+$\int\rho d\vec S$ will be... troublesome.  As luck would have it, though, he 
+and Rory have already come up with an algorithm that nicely deals with the 
+problem of discrete SPH particles nicely.  I've emailed Rory to ask about it.
+We talked about the Rahimi paper I sent him yesterday, and I've got a better
+idea as to what I will be working on in the future.  I need to talk to Chris
+about using his results to model supernova feedback in my simulations, so I
+will send him an email or pull him aside after the next group meeting.
+\subsection*{Thursday}
+I received an email from Rory earlier this morning, including his formulation
+for calculating $\dot M$.  It's contained within a python script on his machine,
+mercury.  It is stored at\\ \verb!/home/woodsrm/python/createImages.py!.  The 
+pertinent line is as follows:\\
+\verb!s.g['mdot'] = -(s.g['r']**2)*s.g['rho']*s.g['vr']!\\
+This translates to this equation (for gas, as indicated by the \verb!s.g! 
+variables being accessed):
+$$\dot M = -r^2\rho v_r$$
+Naturally, this will need to be calculated for both the gas and stars.  I've
+started a script at\\ \verb!Research/code/scripts/mass_inflow.py! for this work.
+\subsection*{Friday}
+There is a strange effect going on after calculating $\dot M$, where the face
+on mass flux changes sign in what looks like opposite quarters of the galaxy.
+I'm going to talk to James about what is up with it.\\
+The meeting with James was extremely productive.  We derived a more 
+theoretically justified method for calculating the mass inflow through a shell,
+that will work better for the discrete case.  It is defined as follows:
+\begin{itemize}
+\item A spherical shell with inner radius $r$ and thickness $\Delta r$
+\item Particles within that shell are added to determine the mass flow through
+the shell.  This is defined as follows:
+\end{itemize}
+$$\Sigma m \frac{v_r}{\Delta r}$$
+We may eventually want to calculate something that uses the smoothing length
+to be a bit more sophisticated, but as of yet this should be sufficient for
+our purposes.\\
+James and I also discussed the direction my work will be going in the near 
+future.  With Chris' work on a high-resolution star formation model, we 
+hope to be able to better determine the cooling time for an area (this 
+determines the starformation rate as $\dot\rho_* = c_*\rho\tau^{-1}$).  The idea
+is to perhaps use a multifluid model to model the cool molecular component along
+with the hotter, lower density ISM.  Currently, a naive method simply averages
+the temperature of the box, which is problematic because the cooling efficiency
+$\Lambda$ is a function of the temperature of the medium, and peaks for
+intermediate temperatures.  The cooling time is defined simply as:
+$$\tau_{cool} = \frac{kT}{\Lambda}$$
+\end{document}

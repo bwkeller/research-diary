@@ -1,0 +1,92 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ Apr $|$ 24}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\section*{Research Road Map}
+\subsection*{Ultimate Goal}
+Produce realistic (physically accurate) Starformation histories and rates in
+Milky-Way type galaxy simulations.  This means that their feedback properties
+and their SFR/SF histories must match observations.  These observations can
+be found in Leroy et al. 2008,  Walter 2008 (the THINGS paper), Kennicutt 2008, etc.
+\subsection*{How to accomplish this}
+I am trying to tackle the problem of overcooling and hyperactive starformation
+by incorporating more/better physics into the SPH simulation code.  These are 
+either improvements on the existing subgrid physics (to better match the 
+physical conditions of the galaxy) or to add new physics (some process that is
+either unresolved, or is more than just gravity+hydro).  As of today, I have
+three main prongs that I will be using to try and achieve my goal
+\begin{description}
+\item[RT Force] This is an implementation of the Ritchie and Thomas multiphase
+SPH described in Ritchie \& Thomas 2001.  James has already written this into
+gasoline, but I will be testing it out extensively.  The hope is that this
+technique will somehow improve the SFR in galaxies because of its better 
+handling of fluids made of particles with different densities
+\item[Simple UV Ionization] Elizabeth Harper-Clark's Thesis describes the 
+disruption of starforming regions by the clusters they form.  She found an 
+empirical relation between the amount of stellar mass a Giant Molecular Cloud
+needs to form in order to ionize itself and disrupt star formation in it of 
+roughly 7:1 gas:star mass.  James and I banged together a really quick 
+implementation of this in gasoline, and it just heats up neighbours of a newly
+formed star to 10,000K and turns off their cooling for a while.  Hopefully this
+will kill off starformation by obliterating clouds that form a lot of stars.
+We will need decent resolution, though, so that the GMCs can actually have
+a reasonable number of particles in them.
+\item[Hopkins BH Accretion] Gasoline already has some support for sink 
+particles.  I'm going to add the accretion model from Hopkins 2008 to gasoline,
+and do some simulations of galaxies with SMBH sink particles using this better
+accretion.  Hopefully this will give us some feedback (How?) that will suppress
+starformation.
+\end{description}
+
+\pagebreak
+\subsection*{To Do}
+\begin{bullets}
+\item[\checkmark] Rewrite Chris' density profile code to generate SPH ICs
+\item[\checkmark] Generate Tipsy file from Chris' IC
+\item Add Chris' potential to gasoline's pstGravExternal
+\item Run Chris' Disk adiabatically
+\item Run Chris' Disk with fabiogal parameter
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Wednesday}
+Today I finished the first draft of the poster abstract for CASCA.  I've also 
+transcribed my research road map and downloaded some background reading.
+\subsection*{Friday}
+Today I \textit{really} got Chris' IC particles finished.  I needed to correct
+a number of bugs.  First and foremost, I forgot that the the distribution 
+function will automatically try to stretch the z-dimension to its appropriate
+size, so I didn't need to make a non-cubic glass to seed the thing.  I've
+also made separate top and bottom halves, because the reflection way I was
+doing it previously was a bad idea.  I just ``glue'' the top and bottom slices
+together by catting them into a common file.  My next goal is to turn the 
+ascii ICs into a tipsy file.
+
+Finished making a tipsy file of the ICs!  The script \verb!mktipsy.py! takes
+the ascii IC position and temperature values and generates initial 
+conditons.  All this stuff is in \verb!Research/code/chris_IC!
+
+I need to also implement an additional external potential into gasoline to 
+capture the potential that Chris is using.  Without it, his ICs will blow up.
+James suggested I start using the \verb!pkdBodyForce! in \verb!pkd.c! and 
+modify it to fit with Chris' potential.  Once this is done, we will be able to
+actually run the IC.  As a first test, James wants me to run it adiabatically
+(no cooling or starformation).  If it is working, it should just sit happily 
+and not really evolve.  Once this is working, we will want to run it using the
+fabiogal parameter file I placed in \verb!Research/code/chris_IC!.  I have some
+nice clear objectives for the immediate future.  Excellent.
+\end{document}

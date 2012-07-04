@@ -1,0 +1,53 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ Jan $|$ 23}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item[\textleaf] Replicate figure 5 from Hopkins 2011
+\item Track down cause of ChaNGa crash at time \~0.3
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Wednesday}
+I have come to the unfortunate realization that gasoline's checkpointing behaves
+poorly with the \verb!.log! and \verb!.starlog! files, as in it just gives up
+writing to them if there is a file already there.  Ugh.  So, all of my "resumed"
+jobs are lacking starformation history files.  I have restarted Tom's ICs for
+the non-ionized part, because the starlog was broken.  It looks like gasoline is
+\textit{supposed} to resume things gracefully, but I guess something on orca
+crapped out again.  This is particulary weird, because g1536 has restarted fine
+a number of times. So the status with my current simulations are:
+\begin{description}
+\item{\verb!/work/kellerbw/g1536_noionize_DRTFORCE!}\\ Still running, iRung is
+going crazy again though
+\item{\verb!/work/kellerbw/g1536_ionize_DRTFORCE!}\\ Still running, iRung
+is going crazy again though
+\item{\verb!/work/kellerbw/isol_galaxy_ionization_DRTFORCE!\checkmark}\\ 
+Finished, copied to fox2, but the starformation rate is so low (or resolution 
+is too coarse) to see any big difference in the SFR without ionization
+\item{\verb!/work/kellerbw/isol_galaxy_noionization_DRTFORCE!\checkmark}\\ See
+above 
+\item{\verb!/work/kellerbw/Tom_IC_ionization_DRTFORCE!\checkmark}\\ Looks good,
+needs to run longer.  I've set it up for 400 steps, instead of the previous 150.
+\item{\verb!/work/kellerbw/Tom_IC_noionization_DRTFORCE!}\\ The log and starlog
+are totally wrecked.  I've restarted from the beginning, but orca is being 
+difficult today, so it may take a while
+\end{description}
+James suggested examining a density versus temperature phase diagram as a way 
+of comparing runs.
+\end{document}

@@ -1,0 +1,68 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ Jan $|$ 09}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item[\checkmark] Run Tom's ICs on gasoline.
+\item[\textleaf] Replicate figure 5 from Hopkins 2011
+\item[\checkmark] Make some cool movies using pynbody
+\item[\textleaf] Run ionization test cases
+\item Track down cause of ChaNGa crash at time \~0.3
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Monday}
+I've begun working on the mass inflow calculator in earnest in 
+\verb!Research/code/scripts/mass_inflow.py! using the algorithm James and I
+discussed Friday.  It will calculate the mass flow through a shell with inner
+radius $R$ and outer radius $R+\Delta R$
+\subsection*{Wednesday}
+I've finished up fiddling with pynbody and the mass inflow calculator, and I
+feel sufficiently confident that I can now reproduce figure 5 from Hopkins
+2011.
+\\
+I've just had an extremely eventful and productive meeting with James and Greg
+Stinson.  We've implemented a new feature in gasoline, a copy of which can be
+found at \verb!Research/code/gasoline_ionization!.  What the new code does is
+that after each star formation event, we simulate the effects of UV ionization
+on the surrounding gas by heating it to 8000 K, and turning off the cooling
+features (as ionized HII cools inefficiently).  This has the effect of 
+a de facto starformation killer, and will moderate the starformation rate in an
+area not by removing gas, but by raising its temperature above the starformation
+threshold of 1000 K (simply change dTempMax in the parameter file).  
+This will also have an effect on SN feedback.  I need to
+run the new code on an initial condition Greg will send me, and on Tom's ICs 
+after the initial burst in starformation is over.  I need to plot that to find
+out when it is!  I will also need to run this with the original gasoline as a 
+comparison to see what the effect of the new physics is.  I've emailed Greg
+about sending me the location for his initial conditions.  I will need to run
+this with metal cooling.  I also need to add the \verb!-DDIFFUSION! flag to
+the compile-time options.  I also need to remember to copy the 
+\verb!cooltable_xdr! to the working directory of any run that uses the metal
+cooling.
+\subsection*{Friday}
+I began to feel a bit over my head today.  Yesterday afternoon, I met with Greg,
+and we found that gasoline was running his \verb!g1536! intial conditions very
+slowly, and this was due to \verb!iRung! being knocked up to large ($\approx15$)
+values after the completion of the first timestep.  I was unable to find the 
+cause of this.  I've started a run of Greg's ICs with checkpointing fixed, and
+with tipsy outputs at every timestep.  I've restarted all of the ionization 
+comparison runs, and James advised me to keep code and data separate, with
+code in \verb!~kellerbw! and data on \verb!/work/kellerbw!.  Once the comparison
+runs are complete, I will reorganize my data on SHARCNet.
+\end{document}

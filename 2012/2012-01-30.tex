@@ -1,0 +1,83 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ Jan $|$30}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item Figure out if the stellar gas ionization is actually affecting SFR
+\item[\textleaf] Replicate figure 5 from Hopkins 2011
+\item Track down cause of ChaNGa crash at time \~0.3
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Thursday}
+I'm a bit baffled.  The run of Tom's ICs using the DRTFORCE flag and the 
+ionization (comparing the ionization on/off) doesn't seem to be producing a whit
+of difference in the actual output.  As 
+\verb!Research/code/scripts/compareSFR_Tom_IC_DRTFORCE.py! shows, the total
+SFR is barely different, aside from the initial peak happening earlier (!).  
+Also alarming is the total mass, shown by 
+\verb!Research/code/scripts/compareStarMass_Tom_IC_DRTFORCE.py!.  I'm going to
+write a script to try and look at the temperature vs. density as James 
+suggested.\\
+
+I've plotted and pondered the phase diagram of the gas particles in Tom's ICs
+(general $T$ vs $\rho$ plotting script at 
+\verb!Research/code/scripts/plot_T_rho.py!, comparison script at \\
+\verb!Research/code/scripts/compare_T_rho_Tom_IC_DRTFORCE.py!).  Kevin and I
+hypothesize the lack of SF quenching is due to sloppy conditions in gasoline's
+ionization subroutine.  What appears to be happening is the ``heating'' of 
+dense molecular gas is occuring along with (in reality cooling) of hot, thin
+halo gas.  Looking at the code, I don't think this is actually what is occuring.
+It should be checking that the temperature of the particles ionized is below
+\verb!dIonizeTMin! and \verb!dIonizeT!.  I wonder if it has to do with the 
+following lines not occuring within the if statement checking that the
+temperature is below \verb!dIonizeT!:\\
+\verb!      mgot += q->fMass;!\\
+\verb!      ngot++;!\\
+\verb!      tCoolAgain = smf->dIonizeTime+smf->dTime;!\\
+\verb!      if (tCoolAgain > q->fTimeCoolIsOffUntil) q->fTimeCoolIsOffUntil=tCoolAgain;!\\
+I've created an alternate gasoline source tree at 
+\verb!Research/code/gasoline_ionization_bettercheck!.  In there, I've
+switched the following lines in \verb!smoothfcn.c! from:\\\\
+\verb!      mgot += q->fMass;!\\
+\verb!      ngot++;!\\
+\verb!      tCoolAgain = smf->dIonizeTime+smf->dTime;!\\
+\verb!      if (tCoolAgain > q->fTimeCoolIsOffUntil) q->fTimeCoolIsOffUntil=tCoolAgain;!\\
+\verb!if (T < smf->dIonizeT) {!\\
+\verb!	  CoolInitEnergyAndParticleData( smf->pkd->Cool, &q->CoolParticle, &q->u, q->fDensity, !\\
+\verb!smf->dIonizeT, q->fMetals );!\\
+\verb!	  }!\\\\
+To this:\\\\
+\verb!if (T < smf->dIonizeT) {!\\
+\verb!      mgot += q->fMass;!\\
+\verb!      ngot++;!\\
+\verb!      tCoolAgain = smf->dIonizeTime+smf->dTime;!\\
+\verb!      if (tCoolAgain > q->fTimeCoolIsOffUntil) q->fTimeCoolIsOffUntil=tCoolAgain;!\\
+\verb!	  CoolInitEnergyAndParticleData( smf->pkd->Cool, &q->CoolParticle, &q->u, q->fDensity, !\\
+\verb!smf->dIonizeT, q->fMetals );!\\
+\verb!	  }!\\
+\subsection*{Friday}
+I've created a nice little script for plotting the difference between the 
+ionization and no ionization version of Tom's ICs.  It works by doing a 2D
+histogram of the $\rho-T$ diagram, and then just subtracting the bin values for
+the two versions.  It's at 
+\verb!Research/code/scripts/compare_T_rho_Tom_IC_DRTFORCE2.py!.  As it shows, 
+there is some interesting stuff going on, where the ionization seems to be 
+upping the density in the S-shaped part of the phase diagram, while also 
+depleting the highest density chunk of the high-temperature string of particles.
+\end{document}

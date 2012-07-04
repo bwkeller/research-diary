@@ -1,0 +1,55 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ May $|$ 28}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+\pagebreak
+\subsection*{To Do}
+\begin{bullets}
+\item[\checkmark] Add Chris' potential to gasoline
+\item[\checkmark] Run Chris' Disk adiabatically
+\item[\checkmark] Run Chris' Disk with fabiogal parameter
+\item[\textleaf] CASCA Poster
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Monday}
+Once James returned last week, we were able to solve the problem of self 
+gravitation in Chris' parameters: it turns out that gasoline's gravity solver
+is broken for noncubic periodic volumes.  We've hacked a fix for this by setting
+in the parameter file:\\
+\verb!bEwald = 0!\\
+\verb!nReplicas = 5!\\
+\verb!dxPeriod = 1!\\
+\verb!dyPeriod = 1!\\
+\verb!dzPeriod = 0!\\
+I met with James today after searching through the Thode for 
+\subsection*{Tuesday}
+I tried running the volume with \verb!dPhysDenMin=1!, 10 times higher than the 
+default value Fabio used.  It didn't make any appreciable difference, changing
+the average SFR from 0.04285 to 0.04283 (a 0.05 percent change).  I'm going to
+try increasing it by an order of magnitude, to 10 atoms/cc.  WAIT: I think
+that may not work, since \verb!dOverDenMin! is also used, it might override that
+setting.  I've removed it from the file, so we will see how that goes now with 
+the same other settings as before.
+
+I really would like to get myself a queue system for angband so that I could 
+just pile jobs up and have it email me when they finish or die.  I may have to 
+write my own.
+
+I just got a message from James.  Apparently some of the occassional crashes I 
+was having in my starforming runs was because I need to inclode the parameter
+\verb!dExtraStore=a! where $a>0.6$. Obviously.
+\end{document}
