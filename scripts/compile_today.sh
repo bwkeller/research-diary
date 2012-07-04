@@ -17,4 +17,4 @@ ps2pdf "$PSFILE" "$PDFFILE"
 
 rm -f *.out *.dvi *.ps *.tex.backup *~ *.aux *.log
 
-okular $PDFFILE >& /dev/null &
+evince $PDFFILE &
