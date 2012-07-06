@@ -1,13 +1,10 @@
 #!/bin/sh
 
-year=`date +%G`
-month=`date +%m`
-day=`date +%d`
 
-TEXFILE=$year-$month-$day.tex
-PSFILE=$year-$month-$day.ps
-DVIFILE=$year-$month-$day.dvi
-PDFFILE=$year-$month-$day.pdf
+TEXFILE=`ls *.tex | tail -n 1`
+PSFILE=`basename $TEXFILE .tex`.ps
+DVIFILE=`basename $TEXFILE .tex`.dvi
+PDFFILE=`basename $TEXFILE .tex`.pdf
 
 echo "Compiling $TEXFILE."
 

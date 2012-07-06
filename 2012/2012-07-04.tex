@@ -17,7 +17,7 @@
 \subsection*{To Do}
 \begin{bullets}
 \item \checkmark Get phase diagram for ionization run at $\approx 100$ Myr
-\item \checkmark Re-run EVERYTHING without divv, and with proper initial star masses
+\item \textleaf Re-run EVERYTHING without divv, and with proper initial star masses
 \item \textleaf Run with ionization, no SN
 \item Run with 4 glommed together versions of the IC (in the x-y plane)
 \end{bullets}
@@ -40,5 +40,12 @@ feedback, it appears that particles are being brought up to 4000K rather than
 The ionization feedback first knocks particles up to $T_{ionize}=8000$, but 
 they will cool quickly to below $T_{ionizeMin}=4000$, where they will be kicked
 back up again.
+
+\subsection*{Friday}
+I have discovered the unhappy fact that gasoline's checkpointing system does not
+allow you to change the extra storage parameter (important if you are going to
+be turning a few gas particles into many star particles) without restarting a 
+simulation from time zero.  Thus, I needed to re-start from scratch the last
+remaining re-runs of Chris' IC to get them not to crash.
 
 \end{document}
