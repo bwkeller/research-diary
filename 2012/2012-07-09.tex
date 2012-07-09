@@ -1,0 +1,47 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ July $|$ 09}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets} 
+\item \checkmark Get phase diagram for ionization run at $\approx 100$ Myr
+\item \textleaf Re-run EVERYTHING without divv, and with proper initial star masses
+\item \textleaf Run with ionization, no SN
+\item Run with 4 glommed together versions of the IC (in the x-y plane)
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Monday}
+I got into the IMPRS summer school!  w00t.  I'll need to see what to do about
+funding and lodging.
+
+I keep having a cache miss assertion failing in \verb!mdl.c!.  This is highly
+inconvenient, since it makes me have to run on a single core, which is very 
+slow.  I'm going to make a debug fork for gasoline to try and hunt this down.
+
+The line causing the bug in the pthread implementation is 
+\verb!mdl/pthread/mdl.c:1277!.  It appears to only occur in cases where the 
+number of threads is $>1$.  Whelp, if I simply read the damn twiki 
+documentation, I would see that this is a common bug, and can be fixed by
+editing \verb!MDL_CACHE_SIZE! in mdl.h . I changed it from $2*10^6$ to $3*10^6$.
+This didn't seem to work, but it may have been because make spotless doesn't 
+remove the \verb!mdl.o! object.  I've also knocked the value up to $4*10^6$.
+It still hasn't solved the problem.  I am afeared that this may be due to
+the checkpointing again.  I will try and start up a second process, and see
+if they fail again.  And just to be nuts, I'm going to knock the cache up to 8
+million.
+\end{document}
