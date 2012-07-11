@@ -19,12 +19,12 @@
 \item \checkmark Get phase diagram for ionization run at $\approx 100$ Myr
 \item \checkmark Re-run EVERYTHING without divv, and with proper initial star masses
 \item \checkmark Run with ionization, no SN
-\item Generate SFR plot in semilogy (or something that lets me see details 
-before 50 Myr)
-\item Fix the Big version's initial star mass
-\item Calculate scale height vs. time
-\item Re-run everything (turbulent) with $10km/s$ turbulence.
-\item Run with 4 glommed together versions of the IC (in the x-y plane)
+\item \checkmark Generate SFR plot in semilogy (or something that lets me see 
+details before 50 Myr)
+\item \textleaf Fix the Big version's initial star mass
+\item \checkmark Calculate scale height vs. time
+\item \textleaf Re-run everything (turbulent) with $10km/s$ turbulence.
+\item \textleaf Run with 4 glommed together versions of the IC (in the x-y plane)
 \end{bullets}
 
 \textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
@@ -65,4 +65,17 @@ threads will also work.  I'm going to try starting a run with fewer threads.
 I had been using 20 on \verb!iqaluk!, but I will now try 5.  If I can 
 just get past the initial burst, all should be good, and I can bring the 
 thread count back to something reasonable.
+
+\subsection*{Wednesday}
+Ugh.  I had a really hard time getting everything running last night, AND
+I forgot to start the 10 $km/s$ turbulence ionizing runs.  And to top it all
+off, I accidentally killed the starforming run before it finished.  Lovely.
+
+I now finally have everything running.  I also plotted the scaleheights, and 
+surprise, surprise: the SFR peaks almost exactly when the scale height is at
+a minimum.  The plots also show some nice differences between the different
+sims.
+
+I have also written a pair of bash scripts that will sync up all my git repos
+as I come and go from work.  Conveniently enough, they are named come and go :).
 \end{document}
