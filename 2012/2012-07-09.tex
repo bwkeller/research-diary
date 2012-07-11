@@ -17,8 +17,13 @@
 \subsection*{To Do}
 \begin{bullets} 
 \item \checkmark Get phase diagram for ionization run at $\approx 100$ Myr
-\item \textleaf Re-run EVERYTHING without divv, and with proper initial star masses
-\item \textleaf Run with ionization, no SN
+\item \checkmark Re-run EVERYTHING without divv, and with proper initial star masses
+\item \checkmark Run with ionization, no SN
+\item Generate SFR plot in semilogy (or something that lets me see details 
+before 50 Myr)
+\item Fix the Big version's initial star mass
+\item Calculate scale height vs. time
+\item Re-run everything (turbulent) with $10km/s$ turbulence.
 \item Run with 4 glommed together versions of the IC (in the x-y plane)
 \end{bullets}
 
@@ -44,4 +49,20 @@ It still hasn't solved the problem.  I am afeared that this may be due to
 the checkpointing again.  I will try and start up a second process, and see
 if they fail again.  And just to be nuts, I'm going to knock the cache up to 8
 million.
+
+\subsection*{Tuesday}
+Ugh, I am re-running the $64^3$ versions of Chris' IC, because I forgot to 
+update the particle mass. And naturally, it now is crazy crashy.  I keep 
+increasing the value of \verb!dExtraStore!, now all the way to 8.
+
+I understand what has happened.  When the gasoline splits the sim into 
+partitions for the different threads to deal with, it gives them all a roughly
+equal fraction of the available memory.  Most of the starformation must be 
+happening within one of these partitions, and it is just overwhelming the
+(admittedly large) \verb!dExtraStore! value of 8.  I can either use a really
+crazy large value of dExtraStore to fix this, but I also suspect using  fewer
+threads will also work.  I'm going to try starting a run with fewer threads.
+I had been using 20 on \verb!iqaluk!, but I will now try 5.  If I can 
+just get past the initial burst, all should be good, and I can bring the 
+thread count back to something reasonable.
 \end{document}
