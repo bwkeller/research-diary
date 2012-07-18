@@ -1,0 +1,42 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{2012 $|$ July $|$ 16}}
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{Ben Keller}
+\newcommand{\institution}{McMaster University}
+
+% The guts and glory
+\usepackage{researchdiary}
+
+% Begin document
+\begin{document}
+
+\subsection*{To Do}
+\begin{bullets}
+\item \checkmark Fix the Big version's initial star mass
+\item \checkmark Re-run everything (turbulent) with $10km/s$ turbulence.
+\item \textleaf Run with 4 glommed together versions of the IC (in the x-y plane)
+\item Hunt down sources of periodicity in SFR
+\item Plot energy budget in Chris' IC
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+
+\section*{Daily Log}
+\subsection*{Monday}
+I met with James today, and we discussed the results of the $10 km/s$ turbulent
+runs.  As the plots show, the crazy burst/collapse effect at the beginning was
+from the turbulent pressure: it is totally eliminated in these runs.  James
+suggest I hunt down the smaller amplituded/low $\mathbf{k}$ fluctuations:
+are they bin result? Or are they something caused reflections from the box?
+%\subsection*{Tuesday}
+%\subsection*{Wednesday}
+%\subsection*{Thursday}
+%\subsection*{Friday}
+%\subsection*{Saturday}
+%\subsection*{Sunday}
+
+\end{document}
