@@ -20,7 +20,7 @@
 \item \checkmark Re-run everything (turbulent) with $10km/s$ turbulence.
 \item \textleaf Run with 4 glommed together versions of the IC (in the x-y plane)
 \item Hunt down sources of periodicity in SFR
-\item Plot energy budget in Chris' IC
+\item \checkmark Plot energy budget in Chris' IC
 \end{bullets}
 
 \textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
@@ -32,9 +32,27 @@ runs.  As the plots show, the crazy burst/collapse effect at the beginning was
 from the turbulent pressure: it is totally eliminated in these runs.  James
 suggest I hunt down the smaller amplituded/low $\mathbf{k}$ fluctuations:
 are they bin result? Or are they something caused reflections from the box?
-%\subsection*{Tuesday}
-%\subsection*{Wednesday}
-%\subsection*{Thursday}
+\subsection*{Tuesday}
+Made some plots. Yup.
+\subsection*{Wednesday}
+I just had the most intense marathon meeting with James today.  210 minutes of
+pure discussion.  We've come to the conclusion (based on a paper on "Diffuse 
+Nebulae" from 1969) that HII regions are too big to be considered "subgrid"
+problems, and we likely need real radiative transfer in order to actually 
+model the physics there.
+
+\subsection*{Thursday}
+As a result of yesterday's discussion, I'm going to see what I can do to 
+speed up gasoline.  I've started with some basic profiling with gprof. 
+The test data is at \verb!Research/data/gasoline_performance!, and I've started
+a performance branch of gasoline in git.  The test parameter runs in 317.26s
+in vanilla gasoline.  The biggest share of the execution time is in 
+\verb!pkdBucketInteract!, the gravity solver function. I'm going to see if 
+\verb!#define NATIVE_SQRT! speeds things up.  Essentially no change.
+
+Tomorrow I would like to meet with James to discuss the results of the wide
+box runs.  I've restarted the last two with bigger CPU numbers, hopefully
+that will speed things up.
 %\subsection*{Friday}
 %\subsection*{Saturday}
 %\subsection*{Sunday}
