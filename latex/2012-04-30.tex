@@ -1,0 +1,77 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{  2012 $|$ 4 $|$ 30 } }
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{ BW Keller }
+\newcommand{\institution}{ McMaster University }
+
+% The guts and glory
+\usepackage{research_diary}
+\setcounter{secnumdepth}{-1}
+
+% Begin document
+\begin{document}
+
+\section{To Do}
+\begin{bullets}
+\item[\checkmark] Rewrite Chris' density profile code to generate SPH ICs
+\item[\checkmark] Generate Tipsy file from Chris' IC
+\item Add Chris' potential to gasoline
+\item Run Chris' Disk adiabatically
+\item Run Chris' Disk with fabiogal parameter
+\item Run violent shocktube to compare RT Forces
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+\section{Daily Log}
+
+\subsection{Monday}
+
+Chris did send me a copy of the external potential he used, which is
+this simple form: \[ g(z) = \frac{v_c^2z}{R^2+z^2}\] I've added this to
+\texttt{pkd.c} as the function \texttt{pkdChrisDiskForce} which takes
+arguments for the disk radius $R$ and circular velocity $v_c$. In order
+to enable this feature, I've added a 3 parameters into gasoline:
+
+\begin{itemize}
+\item
+  \emph{bChrisDisk} Turn on Chris' disk potential
+\item
+  \emph{dChrisDiskVc} Circular velocity (in km/s) for Chris' disk
+  potential
+\item
+  \emph{dChrisDiskR} Disk radius (in kpc) for Chris' disk potential
+\end{itemize}
+
+The total mass of Chris's disk slice is $1.079*10^7\Msun$, so when
+making a SPH IC from it, I just give each particle an equal slice of
+this mass. The IC I generated at
+$Research/code/chris_IC/IC_particles.std$ contains 65,536 particles,
+which gives a mass of $\approx165\Msun$ per particle.
+
+\subsection{Tuesday}
+
+Today I tried to get Chris's disk running adiabatically. I created a
+param file at \texttt{Research/code/chris\_IC/adiabatic.param} that
+should contain all the required flags to run without cooling or
+starformation, with periodic boundaries along the x and y axes. Orca is
+being finicky again though, and my job has been sitting in the queue for
+the past 15 minutes, so this may not be very productive today.
+
+\subsection{Wednesday}
+
+I needed to add a few things to the adiabatic param file that were
+missing.\\First, I needed to add the gravitational softening length,
+defined as: \[h=1.4(\frac{M_{particle}}{\rho_{max}})^{1/3}\] This value
+was set using the \texttt{dSoft} parameter in the param file. I also
+needed to include a timestep (which is typically the sound crossing time
+in the smallest dimension). I determined this to be $\approx10^6yr$.
+This was set using the \texttt{dDelta} parameter, scaled using the
+\texttt{dSecUnit} found in the log file after a quick run of the
+parameter file. The scaled value I used was \texttt{dDelta = 0.00002}.
+
+
+\end{document}

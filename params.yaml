@@ -1,0 +1,7 @@
+author: BW Keller
+institution: McMaster University
+frequency: weekly
+latex_compiler: 
+    - latex FILENAME.tex 
+    - dvipdf FILENAME.dvi
+pdf_viewer: evince
