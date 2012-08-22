@@ -1,0 +1,60 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{  2012 $|$ 3 $|$ 19 } }
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{ BW Keller }
+\newcommand{\institution}{ McMaster University }
+
+% The guts and glory
+\usepackage{research_diary}
+\setcounter{secnumdepth}{-1}
+
+% Begin document
+\begin{document}
+
+\section{To Do}
+\begin{bullets}
+\item Rewrite Chris' density profile code to generate SPH ICs
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+\section{Daily Log}
+
+\subsection{Monday}
+
+I fixed the error James and I found in the tipsy version of oscar's ICs
+that I generated
+
+\subsection{Thursday}
+
+Tonight I am going to dig into Chris and Patrick's code to generate an
+SPH IC comparable to the AMR IC Chris is using. The parameters for his
+IC are:
+
+\center
+
+\begin{tabular}{| c | c | c | c |}
+\hline
+Variable & Units & Value & Description\\
+\hline
+$Z_{min}$ & kpc & $-8$ & Bottom of the simulation volume\\
+$Z_{max}$ & kpc & $8$ & Top of the simulation volume\\
+$X_{min}$ & kpc & $0$ & Left of the simulation volume\\
+$X_{max}$ & kpc & $1$ & Right of the simulation volume\\
+$Y_{min}$ & kpc & $0$ & Back of the simulation volume\\
+$Y_{max}$ & kpc & $1$ & Front of the simulation volume\\
+\hline
+\end{tabular}
+
+Since the glass is a cube, I simply need to stack 16 cubes on top of
+each other to get the $1\times1\times16$ kpc volume of Chris' ICs. In
+Chris' original code, $u_2$ is the density I want to determine. I'll
+simply write a python script that produces $u_2$. It looks like I need
+another function, \texttt{u1primed} from Chris, so I've sent him an
+email asking about it.
+
+
+\end{document}

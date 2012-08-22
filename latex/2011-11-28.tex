@@ -1,0 +1,130 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{  2011 $|$ 11 $|$ 28 } }
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{ BW Keller }
+\newcommand{\institution}{ McMaster University }
+
+% The guts and glory
+\usepackage{research_diary}
+\setcounter{secnumdepth}{-1}
+
+% Begin document
+\begin{document}
+
+\section{To Do}
+\begin{bullets}
+\item[\checkmark] See where to start with gasoline
+\item[\textleaf] Run Tom's ICs on gasoline.
+\item Track down cause of ChaNGa crash at time \~0.3
+\item Familarize myself with tipsy
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+\section{Daily Log}
+
+\subsection{Monday}
+
+Over the weekend, ChaNGa running on angband crashed twice, once at time
+0.34 and then at time 0.32. I must find out the source of this if I am
+to get it to run on any machine, let alone SHARCNet.
+
+\subsection{Tuesday}
+
+I dumped the last few lines of the ChaNGa output into a textfile stored
+in \verb!Research/code/changa_uw/crashlog!. I will go about analyzing it
+once I have finished getting gasoline running. I wonder if the reason it
+is dying around the same time, due to a crash in the starform.C section
+of the program is that starformation ``kicks in'' around time 0.3? I
+will have to examine this tomorrow once gasoline is running on
+SHARCNet.\textbackslash{}
+
+James' up-to date version of gasoline is stored on imp at
+\verb!~wadsley/pkdgrav/pkdgrav!. I've made a copy into my research code
+directory at \verb!Research/code/gasoline!. I will now try and get it to
+compile and run on fox2. It looks like the \verb!Makefile! in gasoline
+is just manually edited in order to configure and compile gasoline.
+There is a script called \verb!build!, but it looks old and out of date.
+I am going to try and document the compile time options for gasoline, as
+I need to know what they all are. Thedefault option for the Makefile
+asks for which parallelization toolkit to use, I think I ought to use
+pthread for running on fox2 and angband. Gasoline depends on \verb!mdl!
+from \verb!~wadsley/pkdgrav/mdl! on imp, so I fetched that and put it in
+\verb!Research/code/mdl!. A straight make with \verb!-DCOOLING_COSMO!
+fails, so I'm trying with \verb!-DNOCOOLING!. It failed again, but I
+just needed to recompile \verb!Research/code/mdl/pthread/mdl.o! for my
+CPU arch. This compiles the code. Trying to run it on Tom's ICs fails,
+it complains of needing \verb!libimf.so!, but it looks like I just
+compiled it incorrectly. I'm now trying to compile just the
+\verb!gasoline! executable. Compilation of \verb!smoothfcn.c! fails. I
+need to remove the \verb!-DNOCOOLING! flag to fix this. Fixing the
+cooling flags allowed it to compile properly. The option for changing
+the number of threads is \verb!-sz!. I have started to run gasoline on
+angband using Tom's IC.
+
+\subsection{Wednesday}
+
+It looks like gasoline crashed on angband at some point last night, but
+I massively overloaded the system with handbrake as well as a 5 thread
+gasoline run, so I restarted it in hopes that it was just a system
+resources issue. It crashed again. Once I get it running on SHARCNet, I
+will dig in to find the source of the crash.\textbackslash{}
+
+Gasoline runs fine on SHARCNet's orca, when compile with the
+\verb!make mpi! command. Just run it using
+\verb!sqsub -q mpi -n NCORES ./gasoline PARAM! for \verb!NCORES! cpus
+and using the parameter file \verb!PARAM!. I found the source of the
+crash. In gasoline's \verb!smooth.c! line 376, there is an
+\verb!assert(0)! statement that will ALWAYS cause a crash (because
+assert causes a failure if the argument is 0), unless \verb!iSmoothType!
+is one of the types in the long switch statement starting at line 36. In
+other words, the thing crashes because I'm possibly missing a
+compile-time flag. I've added a line before line 376 to print the value
+of this flag, and see what is up. That should let me know what compiler
+flag I need to include in order to get the thing to run. The smoothing
+type that is causing crash is 2. This corresponds to a
+\verb!smx_smoothtype! of \verb!SMX_DENSITYTMP! as defined in the header
+file \verb!smoothfcn.h!. There actually is no flag to allow this to be
+checked for in the switch! The only flag I can see near the problem
+lines in \verb!main.c! is \verb!DENSITYU!, so I will try that. This is a
+bit of a shot in the dark! Well, that failed. I will remove that flag,
+and try introducing into \verb!smooth.c! a fopy of the
+\verb!SMX_DENSITY! switch case, modified to work with
+\verb!SMX_DENSITYTMP!. Hopefully this is the appropriate course of
+action, I will need to ask James about it if this works.
+
+\subsection{Thursday}
+
+It turns out all of the difficulty I have had with the was because I was
+using the wrong version of gasoline. James pointed me to
+\verb!~wadsley/pkdgrav/pkdgrav_stable!, which is the right and proper
+version of gasoline. It is now running successfully on orca.
+
+\subsection{Friday}
+
+My runs of gasoline on orca keep crashing. It doesn't look like gasoline
+is to blame, but flakiness on orca (infiniband crash, mpi stuff, etc.).
+If I can't get a successful run finished by Monday, I'll have to ask
+James about it. I've been restarting them as I catch
+them.\textbackslash{}
+
+I've started working on the manual for gasoline, I'm hoping to at least
+get a rough table of contents.
+
+\subsection{Saturday}
+
+Gasoline has hung again, with no indication as to why. I hypothesized in
+bed last night that it may be due to one or more nodes running out of
+memory, so I've specified the memory per process to be 2GB rather than
+the default 1GB. We shall see if that fixes things. * Changed
+\verb!CC = icc! to \verb!CC = gcc! * Removed the line
+\verb!COOLING_OBJ = ! * Removed the line
+\verb!COOLING_DEF = -DNOCOOLING! * Added the line
+\verb!COOLING_OBJ = cooling_cosmo.o! * Added the line
+\verb!COOLING_DEF = -DCOOLING_METAL!
+
+
+\end{document}
