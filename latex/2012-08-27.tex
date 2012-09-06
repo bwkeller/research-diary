@@ -1,0 +1,96 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{  2012 $|$ 8 $|$ 27 } }
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{ BW Keller }
+\newcommand{\institution}{ McMaster University }
+
+% The guts and glory
+\usepackage{research_diary}
+\setcounter{secnumdepth}{-1}
+
+% Begin document
+\begin{document}
+
+\section{To Do}
+\begin{bullets}
+\item[\textleaf] Run disk comparison - basic test
+\item[\textleaf] Rerun MAGICC onestar with no cooling (bGasAdiabatic)
+\item[\textleaf] Check on dESN in feedback for the onestar box
+\item Debug James' smDtSmooth
+\item[\checkmark] Get better onestar plots
+\item Symposium day talk.
+\item Read Behroozi paper
+\item[\checkmark] Fancy zoom-in videos
+\item[\textleaf] Re-run Chris IC with DRTFORCE
+\item Make Isotropic onestar box.
+\item Fix onestar box timesteps
+\item Get phase plots of the g1536 galaxy
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+\section{Daily Log}
+
+\subsection{Monday}
+
+I think the runs of the onestar boxes are done. I'm going to produce the
+proper plots and build a page on my website for it.
+
+The g1536 run is going to take months. I don't think I'm going to get
+much of any use there. Perhaps Rory has a completed run\ldots{}
+
+Woah boy. Another epic 2 hour James meeting. I might be meeting with
+Samantha this week to offload some of the large-scale stuff to her.
+
+I've created ICs for Oscar's disk comparison project, and fired the low
+resolution version up on orca. I'll see how it looks in the morning.
+Oops, forgot to add a softening length. The readme says the resolution
+is 80 kpc, so I'll use 1/4 of that to be safe.
+
+\subsection{Tuesday}
+
+I've finished running the low res version of oscar's disk. I'm going to
+make a video of the results to see how things look.
+
+I met with James. He suggests I look at the evolution of the 1/2 mass
+radius as a function of time. He also gave me some ideas for my
+Symposium day talk, along with an email. He suggests I look at the big
+picture, and keep it positive. Avoid sarcasm, etc.
+
+I've fired up the re-runs of the onestar box on iqaluk. I'll download
+the results tomorrow when I get in.
+
+\subsection{Wednesday}
+
+\subsection{Thursday}
+
+James and I had a skype conversation with Greg today.
+
+\subsection{Friday}
+
+Spent the entire day working on my presentation for symposium day. along
+with a good meeting with James about it. In general, I need to pay more
+attention to my audience. In other words, the narrative-heavy TED style
+talks are good for outreach and public talks, but I need to focus on the
+science details for academic talks. He gave me some good pointers:
+
+\begin{itemize}
+\item
+  Remove content-free slides (intros, outlines, etc.)
+\item
+  Don't use fragment bullet points (give people time to think about the
+  slide)
+\item
+  Less history
+\item
+  Don't just talk about my ``personal philosophy''
+\end{itemize}
+
+I'm going to revise the slides today, and send the newest version to
+James when I'm done.
+
+
+\end{document}
