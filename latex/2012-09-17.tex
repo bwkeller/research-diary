@@ -1,0 +1,78 @@
+%%% Research Diary - Entry
+\documentclass[11pt,letterpaper]{article}
+
+% Working date: The date this entry is describing. Not necessary the date of last edit.
+\newcommand{\workingDate}{\textsc{  2012 $|$ 9 $|$ 17 } }
+
+% Name and institution must preceed call to researchdiary.sty package
+\newcommand{\userName}{ BW Keller }
+\newcommand{\institution}{ McMaster University }
+
+% The guts and glory
+\usepackage{research_diary}
+\setcounter{secnumdepth}{-1}
+
+% Begin document
+\begin{document}
+
+\section{To Do}
+\begin{bullets}
+\item[\textleaf] Run disk comparison - basic test
+\item[\textleaf] Rerun MAGICC onestar with no cooling (bGasAdiabatic)
+\item Give Greg debug information
+\item[\checkmark] Symposium day talk.
+\item Read Behroozi paper
+\item[\textleaf] Re-run Chris IC with DRTFORCE
+\item[\checkmark] Make Isotropic onestar box.
+\item Fix onestar box timesteps
+\item Get phase plots of the g1536 galaxy
+\end{bullets}
+
+\textleaf : \textit{In Progress} \qquad \checkmark : \textit{Completed}
+\subsection{Daily Log}
+
+\section{Tuesday}
+
+I had a lunch meeting with James today. He is very keen on getting a
+simple, working ESF model to start playing with. We don't need much in
+the way of the underlying physical principle. Once we have this, we can
+do a HUGE galaxy run ($10 \Msun$ particles).
+
+I spent the afternoon helping James get familiar with git and merge his
+copy of gasoline to the latest version from UW. I also created a syntax
+highlighting file for lanyon entries, so that these journal entries will
+look pretty and clean in vim.
+
+\section{Wednesday}
+
+I am \textbf{finally} getting back to work after a long two weeks of
+summer school and the symposium day talk.
+
+I'm going to try and get to the bottom of why our ESF isn't working as
+well as MAGICC. I have a few ideas:
+
+\begin{itemize}
+\item
+  Not enough energy being input \textbf{I Think this is it!}
+\item
+  HII regions saturating the disk, preventing new ionization \textbf{not
+  the answer, the fraction of mgot/mwanted averaged for 1000 steps is 1
+  to 6 decimal places}
+\item
+  SNe and ESF doing effectively the same thing, so I'm just changing the
+  timing
+\end{itemize}
+
+In order to fully test this, I need that isotropic onestar box. I'm
+going to make one with a uniform temperature of 1000K. The positions
+will be random, but isotropic to give a cube of 1 code unit per side. I
+should probably make the conditions inside similar to my SF threshold
+(10 atom/cc).
+
+After examining the result of the single star ionization run, it looks
+like a very small amount of energy is being injected. At 10 atom/cc and
+1000K, the additional energy put into the box is a mere \$ 10\^{}\{46\}
+erg/Msun\$.
+
+
+\end{document}
