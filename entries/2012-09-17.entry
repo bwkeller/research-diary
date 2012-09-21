@@ -55,4 +55,13 @@ body: |
  
  After examining the result of the single star ionization run, it looks like a
  very small amount of energy is being injected.  At 10 atom/cc and 1000K, the
- additional energy put into the box is a mere $ 10^{46} erg/Msun$.
+ additional energy put into the box is a mere $ 10^{46} erg/Msun$.  This
+ explains everything.  The additional temperature is not enough to actually
+ drive a wind or lift anything, and so the disk collapses further just like in
+ the low SFE examples from Aquila.  All the Ionizing feedback is doing is
+ pushing the star formation backwards by the dIonizeTime.
+
+ Tomorrow I want to hack together a simple ESF routine, a la SB99.
+
+ Thursday
+ ==============================================================================

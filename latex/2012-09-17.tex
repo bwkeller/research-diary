@@ -53,11 +53,11 @@ well as MAGICC. I have a few ideas:
 
 \begin{itemize}
 \item
-  Not enough energy being input \textbf{I Think this is it!}
+  Not enough energy being input (\textbf{I Think this is it!})
 \item
-  HII regions saturating the disk, preventing new ionization \textbf{not
-  the answer, the fraction of mgot/mwanted averaged for 1000 steps is 1
-  to 6 decimal places}
+  HII regions saturating the disk, preventing new ionization
+  (\textbf{not the answer, the fraction of mgot/mwanted averaged for
+  1000 steps is 1 to 6 decimal places})
 \item
   SNe and ESF doing effectively the same thing, so I'm just changing the
   timing
@@ -72,7 +72,15 @@ should probably make the conditions inside similar to my SF threshold
 After examining the result of the single star ionization run, it looks
 like a very small amount of energy is being injected. At 10 atom/cc and
 1000K, the additional energy put into the box is a mere \$ 10\^{}\{46\}
-erg/Msun\$.
+erg/Msun\$. This explains everything. The additional temperature is not
+enough to actually drive a wind or lift anything, and so the disk
+collapses further just like in the low SFE examples from Aquila. All the
+Ionizing feedback is doing is pushing the star formation backwards by
+the dIonizeTime.
+
+Tomorrow I want to hack together a simple ESF routine, a la SB99.
+
+\section{Thursday}
 
 
 \end{document}
