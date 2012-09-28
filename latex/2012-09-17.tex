@@ -71,9 +71,9 @@ should probably make the conditions inside similar to my SF threshold
 
 After examining the result of the single star ionization run, it looks
 like a very small amount of energy is being injected. At 10 atom/cc and
-1000K, the additional energy put into the box is a mere \$ 10\^{}\{46\}
-erg/Msun\$. This explains everything. The additional temperature is not
-enough to actually drive a wind or lift anything, and so the disk
+1000K, the additional energy put into the box is a mere
+$10^{46} erg/Msun$. This explains everything. The additional temperature
+is not enough to actually drive a wind or lift anything, and so the disk
 collapses further just like in the low SFE examples from Aquila. All the
 Ionizing feedback is doing is pushing the star formation backwards by
 the dIonizeTime.
@@ -81,6 +81,17 @@ the dIonizeTime.
 Tomorrow I want to hack together a simple ESF routine, a la SB99.
 
 \section{Thursday}
+
+Today James and I hacked together noncooling energy support into
+gasoline. This noncooling energy is designed to encapsulate all forms of
+energy at the unresolved scale inside a given gas particle (turbulency,
+magnetic fields, etc.) that contribute to the pressure in a given
+particle, but does not cool radiatively. The equations for the new
+energy are: \[\frac{du}{dt} = -(\gamma-1)u\nabla\cdot v - \Lambda + 
+\frac{u_{NC}}{\tau_{conv}} - \kappa\nabla^2 u\]
+\[\frac{du_{NC}}{dt} = -(\gamma-1)u_{NC}\nabla\cdot v - \frac{u_{NC}}{\tau_{conv}} 
+- \kappa\nabla^2 u_{NC} + \dot u_{FB}\] This defines a new pressure as:
+\[P = \rho(\gamma-1)(u+u_{NC})\]
 
 
 \end{document}
